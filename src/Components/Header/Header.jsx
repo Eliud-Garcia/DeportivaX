@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -14,24 +14,49 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
-import { auth } from "../../Firebase/ConfigFirebase";
+import { auth, db} from "../../Firebase/ConfigFirebase";
+
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc} from "firebase/firestore";
 import "./Header.css";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-
+  
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  
+  //para saber si es admin
+  const [isAdmin, setIsAdmin] = useState(false);
+    
   // Escuchar el estado de autenticación
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userRef = doc(db, "usuarios", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists() && userSnap.data().rol === "admin") {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } else {
+        setIsAdmin(false);
+      }
+    });
+
     return () => unsubscribe();
   }, []);
 
@@ -105,8 +130,15 @@ const Header = () => {
                   iniciar sesión
                 </Button>
               )}
+
+              {isAdmin ?
+                <Link to="/admin">admin</Link>
+                : <p></p>
+              }
             </Box>
           )}
+
+          
 
           {/* ICONO HAMBURGUESA (solo en móvil) */}
           {isMobile && (

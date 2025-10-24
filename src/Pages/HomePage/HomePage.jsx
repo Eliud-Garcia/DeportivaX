@@ -17,6 +17,7 @@ const HomePage = () => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const obtenerProductosDestacados = async () => {
       try {

@@ -1,24 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  CircularProgress,
-  IconButton,
-} from "@mui/material";
-import { Add, Edit, Delete } from "@mui/icons-material";
 import { collection, getDocs, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../Firebase/ConfigFirebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
+import "./AdminPage.css"; // estilos simples opcionales
 
 const AdminPage = () => {
   const [productos, setProductos] = useState([]);
@@ -31,7 +16,7 @@ const AdminPage = () => {
     const verificarAdmin = async () => {
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
-          navigate("/"); // Redirigir si no está logueado
+          navigate("/");
           return;
         }
 
@@ -54,9 +39,9 @@ const AdminPage = () => {
     verificarAdmin();
   }, [navigate]);
 
-  // 🔹 Obtener productos desde Firestore
+  // 🔹 Obtener productos
   useEffect(() => {
-    if (!isAdmin) return; // Solo cargar productos si es admin
+    if (!isAdmin) return;
 
     const obtenerProductos = async () => {
       try {
@@ -89,97 +74,84 @@ const AdminPage = () => {
     }
   };
 
-  // 🔹 Redirigir a página de edición
+  // 🔹 Redirigir a editar
   const handleEdit = (id) => {
     navigate(`/admin/edit/${id}`);
   };
 
-  // 🔹 Redirigir a página de creación
+  // 🔹 Redirigir a crear
   const handleAdd = () => {
     navigate("/admin/add");
   };
 
   if (!isAdmin) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-        <CircularProgress />
-      </Box>
+      <div className="loader-container">
+        <p>Cargando...</p>
+      </div>
     );
   }
 
   return (
-    <Container className="admin-page">
-      <Box className="admin-header">
-        <Typography variant="h4" fontWeight="bold">
-          Panel de Administración
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<Add />}
-          onClick={handleAdd}
-        >
-          Agregar producto
-        </Button>
-      </Box>
+    <div className="admin-page">
+      <div className="admin-header">
+        <h2>Panel de Administración</h2>
+        <button onClick={handleAdd}>Agregar producto</button>
+      </div>
 
-      <Typography variant="body1" sx={{ mb: 3 }}>
-        Administra los productos de tu tienda: agrega nuevos, edita existentes o elimínalos.
-      </Typography>
+      <p>Administra los productos de tu tienda: agrega, edita o elimina.</p>
 
       {loading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-          <CircularProgress />
-        </Box>
+        <p>Cargando productos...</p>
       ) : (
-        <TableContainer component={Paper} sx={{ mt: 2 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell><strong>Imagen</strong></TableCell>
-                <TableCell><strong>Nombre</strong></TableCell>
-                <TableCell><strong>Precio</strong></TableCell>
-                <TableCell><strong>Stock</strong></TableCell>
-                <TableCell><strong>Destacado</strong></TableCell>
-                <TableCell align="center"><strong>Acciones</strong></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+        <div className="table-container">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Destacado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
               {productos.map((p) => (
-                <TableRow key={p.id}>
-                  <TableCell>
+                <tr key={p.id}>
+                  <td>
                     <img
                       src={p.imagenUrl}
                       alt={p.nombre}
-                      style={{ width: 70, height: 70, objectFit: "contain" }}
+                      className="product-image"
                     />
-                  </TableCell>
-                  <TableCell>{p.nombre}</TableCell>
-                  <TableCell>${p.precio}</TableCell>
-                  <TableCell>{p.stock}</TableCell>
-                  <TableCell>{p.destacado ? "Sí" : "No"}</TableCell>
-                  <TableCell align="center">
-                    <IconButton color="primary" onClick={() => handleEdit(p.id)}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton color="error" onClick={() => handleDelete(p.id)}>
-                      <Delete />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
+                  </td>
+                  <td>{p.nombre}</td>
+                  <td>${p.precio}</td>
+                  <td>{p.stock}</td>
+                  <td>{p.destacado ? "Sí" : "No"}</td>
+                  <td>
+                    <button onClick={() => handleEdit(p.id)}>Editar</button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(p.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
               ))}
+
               {productos.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} align="center">
-                    No hay productos registrados.
-                  </TableCell>
-                </TableRow>
+                <tr>
+                  <td colSpan="6">No hay productos registrados.</td>
+                </tr>
               )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            </tbody>
+          </table>
+        </div>
       )}
-    </Container>
+    </div>
   );
 };
 

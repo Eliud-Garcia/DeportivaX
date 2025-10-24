@@ -32,7 +32,7 @@ const CardProduct = ({ producto }) => {
 
       let carrito = [];
       if (userSnap.exists()) carrito = userSnap.data().carrito || [];
-
+      
       const index = carrito.findIndex((p) => p.productoId === producto.id);
 
       if (index !== -1) carrito[index].cantidad += 1;

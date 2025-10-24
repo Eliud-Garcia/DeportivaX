@@ -8,7 +8,8 @@ import HomePage from './Pages/HomePage/HomePage.jsx'
 import CartPage from './Pages/CartPage/CartPage.jsx'
 import ProductDetailPage from './Pages/ProductDetailPage/ProductDetailPage.jsx'
 import CheckoutPage from './Pages/CheckoutPage/CheckoutPage.jsx'
-
+import AddProductPage from './Pages/AddProductPage/AddProductPage.jsx'
+import EditProductPage from './Pages/EditProductPage/EditProductPage.jsx'
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -27,6 +28,9 @@ const App = () => {
           <Route path='/product/:id' element={<ProductDetailPage />} />
           <Route path='/checkout' element={<CheckoutPage />} />
           <Route path='/admin' element={<AdminPage />} />
+          <Route path='/admin/add' element={<AddProductPage />} />
+          <Route path='/admin/edit/:id' element={<EditProductPage />} />
+          
         </Routes>
       </Router>
     </>

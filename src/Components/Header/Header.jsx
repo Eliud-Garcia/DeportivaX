@@ -42,8 +42,7 @@ const Header = () => {
   const menuItems = [
     { text: "Inicio", path: "/" },
     { text: "Productos", path: "/products" },
-    { text: "Nosotros", path: "/nosotros" },
-    { text: "Contacto", path: "/contacto" },
+    { text: "Contacto", path: "/contact" },
   ];
 
   const goTo = (path) => {

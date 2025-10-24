@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Container,
   Box,
@@ -6,39 +6,40 @@ import {
   Button,
   Typography,
   Paper,
-  CircularProgress
-} from '@mui/material'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { setDoc, doc } from 'firebase/firestore'
-import { auth, db } from '../../Firebase/ConfigFirebase'
+  CircularProgress,
+} from '@mui/material';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
+import { auth, db } from '../../Firebase/ConfigFirebase';
+import { Link } from 'react-router-dom';
 
-const Register = () => {
+import './RegisterPage.css';
+
+const RegisterPage = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
     direccion: '',
     email: '',
     password: '',
-  })
-  const [loading, setLoading] = useState(false)
+  });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleRegister = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
-      const { email, password, nombre, telefono, direccion } = formData
+      const { email, password, nombre, telefono, direccion } = formData;
 
-      // Crear usuario en Firebase Auth
-      const res = await createUserWithEmailAndPassword(auth, email, password)
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Guardar datos en Firestore
       await setDoc(doc(db, 'usuarios', res.user.uid), {
         nombre,
         telefono,
@@ -46,31 +47,31 @@ const Register = () => {
         email,
         rol: 'cliente',
         carrito: [],
-      })
+      });
 
-      alert('✅ Usuario registrado correctamente')
+      alert('✅ Usuario registrado correctamente');
       setFormData({
         nombre: '',
         telefono: '',
         direccion: '',
         email: '',
         password: '',
-      })
+      });
     } catch (err) {
-      alert('⚠️ Error: ' + err.message)
+      alert('⚠️ Error: ' + err.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 10, mb: 8 }}>
-      <Paper elevation={4} sx={{ p: 5, borderRadius: 3 }}>
+    <Container maxWidth={false} className="register-container">
+      <Paper elevation={4} className="register-paper">
         <Typography variant="h5" align="center" gutterBottom fontWeight={600}>
           Crear una cuenta
         </Typography>
 
-        <Box component="form" onSubmit={handleRegister} sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box component="form" onSubmit={handleRegister} className="register-form">
           <TextField
             label="Nombre completo"
             name="nombre"
@@ -117,21 +118,21 @@ const Register = () => {
             color="primary"
             type="submit"
             disabled={loading}
-            sx={{ mt: 2, py: 1.2, fontWeight: 600 }}
+            className="register-button"
           >
             {loading ? <CircularProgress size={24} color="inherit" /> : 'Registrarse'}
           </Button>
         </Box>
 
-        <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+        <Typography variant="body2" align="center" className="register-login-text">
           ¿Ya tienes una cuenta?{' '}
-          <a href="/login" style={{ color: '#1976d2', textDecoration: 'none', fontWeight: 600 }}>
+          <Link to="/login" className="register-login-link">
             Inicia sesión
-          </a>
+          </Link>
         </Typography>
       </Paper>
     </Container>
-  )
-}
+  );
+};
 
-export default Register
+export default RegisterPage;

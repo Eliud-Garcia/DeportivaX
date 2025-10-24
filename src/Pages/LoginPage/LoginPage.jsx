@@ -15,6 +15,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase/ConfigFirebase";
+import { Link, useNavigate } from "react-router-dom";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -22,12 +24,15 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Inicio de sesión exitoso");
+      navigate("/products");
     } catch (err) {
       alert("Error: " + err.message);
     } finally {
@@ -36,37 +41,9 @@ const LoginPage = () => {
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        background:
-          "linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #90caf9 100%)",
-      }}
-    >
-      <Paper
-        elevation={6}
-        sx={{
-          p: 5,
-          borderRadius: 4,
-          width: "100%",
-          maxWidth: 420,
-          textAlign: "center",
-          backdropFilter: "blur(5px)",
-        }}
-      >
-        <Avatar
-          sx={{
-            bgcolor: "#1976d2",
-            width: 60,
-            height: 60,
-            margin: "0 auto",
-            mb: 2,
-          }}
-        >
+    <Container maxWidth={false} className="login-container">
+      <Paper elevation={6} className="login-paper">
+        <Avatar className="login-avatar">
           <LockOutlinedIcon fontSize="large" />
         </Avatar>
 
@@ -119,23 +96,17 @@ const LoginPage = () => {
             color="primary"
             fullWidth
             disabled={loading}
-            sx={{
-              mt: 3,
-              py: 1.3,
-              fontWeight: "bold",
-              borderRadius: 2,
-              textTransform: "none",
-            }}
+            className="login-button"
           >
             {loading ? "Ingresando..." : "Entrar"}
           </Button>
         </Box>
 
-        <Typography variant="body2" sx={{ mt: 3, color: "text.secondary" }}>
+        <Typography variant="body2" className="login-register-text">
           ¿No tienes una cuenta?{" "}
-          <a href="/register" style={{ color: "#1976d2", textDecoration: "none" }}>
+          <Link to="/register" className="login-link">
             Regístrate aquí
-          </a>
+          </Link>
         </Typography>
       </Paper>
     </Container>

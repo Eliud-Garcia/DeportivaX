@@ -11,11 +11,12 @@ import {
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 import { auth, db } from '../../Firebase/ConfigFirebase';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 
 import './RegisterPage.css';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -57,6 +58,7 @@ const RegisterPage = () => {
         email: '',
         password: '',
       });
+      navigate('/login');
     } catch (err) {
       alert('⚠️ Error: ' + err.message);
     } finally {

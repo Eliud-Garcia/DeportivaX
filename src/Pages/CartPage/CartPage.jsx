@@ -101,14 +101,14 @@ const CartPage = () => {
       // 🔁 Actualizar en pantalla
       const updated = carrito.length
         ? cartItems
-            .map((p) =>
-              p.id === item.id
-                ? carrito.find((c) => c.productoId === p.id)
-                  ? { ...p, cantidad: carrito.find((c) => c.productoId === p.id).cantidad }
-                  : null
-                : p
-            )
-            .filter(Boolean)
+          .map((p) =>
+            p.id === item.id
+              ? carrito.find((c) => c.productoId === p.id)
+                ? { ...p, cantidad: carrito.find((c) => c.productoId === p.id).cantidad }
+                : null
+              : p
+          )
+          .filter(Boolean)
         : [];
 
       setCartItems(updated);
@@ -220,6 +220,7 @@ const CartPage = () => {
     0
   );
 
+
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
@@ -239,7 +240,13 @@ const CartPage = () => {
 
       <Box sx={{ mt: 4, textAlign: "right" }}>
         <Typography variant="h5">Total: ${total.toLocaleString()}</Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2 }}
+          disabled={!cartItems.length}
+          onClick={() => navigate("/checkout")}
+        >
           Finalizar compra
         </Button>
       </Box>

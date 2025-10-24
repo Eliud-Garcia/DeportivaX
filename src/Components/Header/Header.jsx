@@ -11,9 +11,11 @@ import {
   ListItem,
   ListItemText,
   Box,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { auth } from '../../Firebase/ConfigFirebase'
+import { auth } from "../../Firebase/ConfigFirebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import "./Header.css";
 
@@ -22,7 +24,10 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Escuchar cambios de autenticación
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  // Escuchar el estado de autenticación
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -31,7 +36,11 @@ const Header = () => {
   }, []);
 
   const toggleDrawer = (open) => (event) => {
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) return;
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    )
+      return;
     setDrawerOpen(open);
   };
 
@@ -40,9 +49,9 @@ const Header = () => {
   };
 
   const menuItems = [
-    { text: "Inicio", path: "/" },
-    { text: "Productos", path: "/products" },
-    { text: "Contacto", path: "/contact" },
+    { text: "inicio", path: "/" },
+    { text: "productos", path: "/products" },
+    { text: "mi carrito", path: "/mycart" },
   ];
 
   const goTo = (path) => {
@@ -54,46 +63,63 @@ const Header = () => {
     <>
       <AppBar position="static" className="header">
         <Toolbar className="toolbar">
-          {/* LOGO */}
-          <Typography variant="h6" className="logo" onClick={() => navigate("/")}>
-            ⚡ SportZone
+          {/* LOGO IZQUIERDA */}
+          <Typography
+            variant="h6"
+            className="logo"
+            onClick={() => navigate("/")}
+          >
+            DeportivaX
           </Typography>
 
-          {/* MENÚ EN ESCRITORIO */}
-          <Box className="nav-links">
-            {menuItems.map((item) => (
-              <Button
-                key={item.text}
-                color="inherit"
-                onClick={() => goTo(item.path)}
-                className="nav-button"
-              >
-                {item.text}
-              </Button>
-            ))}
-          </Box>
+          {/* NAV LINKS Y BOTONES (ocultos en móvil) */}
+          {!isMobile && (
+            <Box className="nav-links">
+              {menuItems.map((item) => (
+                <Button
+                  key={item.text}
+                  color="inherit"
+                  onClick={() => goTo(item.path)}
+                  className="nav-button"
+                >
+                  {item.text}
+                </Button>
+              ))}
 
-          {/* LOGIN / LOGOUT */}
-          {user ? (
-            <Button color="secondary" variant="contained" onClick={handleLogout}>
-              Cerrar sesión
-            </Button>
-          ) : (
-            <Button color="inherit" onClick={() => navigate("/login")}>
-              Iniciar sesión
-            </Button>
+              {user ? (
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleLogout}
+                  className="auth-button"
+                >
+                  cerrar sesión
+                </Button>
+              ) : (
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() => navigate("/login")}
+                  className="auth-button"
+                >
+                  iniciar sesión
+                </Button>
+              )}
+            </Box>
           )}
 
-          {/* MENÚ HAMBURGUESA MÓVIL */}
-          <IconButton
-            edge="end"
-            color="inherit"
-            aria-label="menu"
-            className="menu-icon"
-            onClick={toggleDrawer(true)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {/* ICONO HAMBURGUESA (solo en móvil) */}
+          {isMobile && (
+            <IconButton
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              className="menu-icon"
+              onClick={toggleDrawer(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
 
@@ -109,11 +135,11 @@ const Header = () => {
 
             {user ? (
               <ListItem button onClick={handleLogout}>
-                <ListItemText primary="Cerrar sesión" />
+                <ListItemText primary="cerrar sesión" />
               </ListItem>
             ) : (
               <ListItem button onClick={() => goTo("/login")}>
-                <ListItemText primary="Iniciar sesión" />
+                <ListItemText primary="iniciar sesión" />
               </ListItem>
             )}
           </List>

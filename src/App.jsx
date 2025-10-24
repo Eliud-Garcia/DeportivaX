@@ -6,8 +6,8 @@ import AdminPage from './Pages/AdminPage/AdminPage.jsx'
 import { useAuth } from './context/AuthContext'
 import Header from './Components/Header/Header.jsx'
 import HomePage from './Pages/HomePage/HomePage.jsx'
-
-
+import CartPage from './Pages/CartPage/CartPage.jsx'
+import ProductDetailPage from './Pages/ProductDetailPage/ProductDetailPage.jsx'
 
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
@@ -24,6 +24,8 @@ const App = () => {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/products' element={<ProductsPage />} />
+          <Route path='/mycart' element={<CartPage />} />
+          <Route path='/product/:id' element={<ProductDetailPage />} />
         </Routes>
       </Router>
     </>

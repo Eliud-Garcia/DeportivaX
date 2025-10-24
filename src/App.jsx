@@ -6,6 +6,8 @@ import AdminPage from './Pages/AdminPage/AdminPage.jsx'
 import { useAuth } from './context/AuthContext'
 import Header from './Components/Header/Header.jsx'
 import HomePage from './Pages/HomePage/HomePage.jsx'
+import Login from './Pages/Login/Login.jsx'
+
 
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
@@ -19,7 +21,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/login' element={<LoginPage />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/products' element={<ProductsPage />} />
         </Routes>

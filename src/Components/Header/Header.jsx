@@ -1,5 +1,7 @@
 // src/Components/Header.jsx
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   AppBar,
   Toolbar,
@@ -30,20 +32,10 @@ const Header = () => {
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
-  const handleLoginLogout = async () => {
-    if (user) {
-      await signOut(auth);
-    } else {
-      // Puedes reemplazar esto por un modal o una página de login real
-      const email = prompt("Correo:");
-      const password = prompt("Contraseña:");
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("Inicio de sesión exitoso");
-      } catch (error) {
-        alert("Error en el inicio de sesión");
-      }
-    }
+  const navigate = useNavigate();
+
+  const handleLoginLogout = () => {
+    navigate("/login"); 
   };
 
   const navItems = [

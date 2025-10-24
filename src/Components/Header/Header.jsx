@@ -1,7 +1,5 @@
-// src/Components/Header.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import {
   AppBar,
   Toolbar,
@@ -15,14 +13,16 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { auth } from "./../../Firebase/ConfigFirebase";
-import { signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../Firebase/ConfigFirebase'
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import "./Header.css";
 
 const Header = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Detectar sesión activa
+  // Escuchar cambios de autenticación
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -30,88 +30,95 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-
-  const navigate = useNavigate();
-
-  const handleLoginLogout = () => {
-    navigate("/login"); 
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) return;
+    setDrawerOpen(open);
   };
 
-  const navItems = [
-    { label: "Inicio" },
-    { label: "Productos" },
-    { label: "Contacto" },
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
+  const menuItems = [
+    { text: "Inicio", path: "/" },
+    { text: "Productos", path: "/products" },
+    { text: "Nosotros", path: "/nosotros" },
+    { text: "Contacto", path: "/contacto" },
   ];
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        DeportivaX
-      </Typography>
-      <List>
-        {navItems.map((item) => (
-          <ListItem button key={item.label}>
-            <ListItemText primary={item.label} />
-          </ListItem>
-        ))}
-        <ListItem button onClick={handleLoginLogout}>
-          <ListItemText primary={user ? "Cerrar sesión" : "Iniciar sesión"} />
-        </ListItem>
-      </List>
-    </Box>
-  );
+  const goTo = (path) => {
+    navigate(path);
+    setDrawerOpen(false);
+  };
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#1976d2" }}>
-        <Toolbar>
+      <AppBar position="static" className="header">
+        <Toolbar className="toolbar">
+          {/* LOGO */}
+          <Typography variant="h6" className="logo" onClick={() => navigate("/")}>
+            ⚡ SportZone
+          </Typography>
+
+          {/* MENÚ EN ESCRITORIO */}
+          <Box className="nav-links">
+            {menuItems.map((item) => (
+              <Button
+                key={item.text}
+                color="inherit"
+                onClick={() => goTo(item.path)}
+                className="nav-button"
+              >
+                {item.text}
+              </Button>
+            ))}
+          </Box>
+
+          {/* LOGIN / LOGOUT */}
+          {user ? (
+            <Button color="secondary" variant="contained" onClick={handleLogout}>
+              Cerrar sesión
+            </Button>
+          ) : (
+            <Button color="inherit" onClick={() => navigate("/login")}>
+              Iniciar sesión
+            </Button>
+          )}
+
+          {/* MENÚ HAMBURGUESA MÓVIL */}
           <IconButton
+            edge="end"
             color="inherit"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ display: { sm: "none" }, mr: 2 }}
+            aria-label="menu"
+            className="menu-icon"
+            onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
-
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold" }}>
-            DeportivaX
-          </Typography>
-
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item.label} sx={{ color: "#fff" }}>
-                {item.label}
-              </Button>
-            ))}
-            <Button
-              color="inherit"
-              variant="outlined"
-              sx={{
-                ml: 2,
-                borderColor: "#fff",
-                color: "#fff",
-                "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
-              }}
-              onClick={handleLoginLogout}
-            >
-              {user ? "Cerrar sesión" : "Iniciar sesión"}
-            </Button>
-          </Box>
         </Toolbar>
       </AppBar>
 
-      <Drawer
-        anchor="left"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        sx={{
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
-        }}
-      >
-        {drawer}
+      {/* DRAWER RESPONSIVE */}
+      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Box className="drawer">
+          <List>
+            {menuItems.map((item) => (
+              <ListItem button key={item.text} onClick={() => goTo(item.path)}>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            ))}
+
+            {user ? (
+              <ListItem button onClick={handleLogout}>
+                <ListItemText primary="Cerrar sesión" />
+              </ListItem>
+            ) : (
+              <ListItem button onClick={() => goTo("/login")}>
+                <ListItemText primary="Iniciar sesión" />
+              </ListItem>
+            )}
+          </List>
+        </Box>
       </Drawer>
     </>
   );

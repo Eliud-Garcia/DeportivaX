@@ -48,20 +48,40 @@ const ProductsPage = () => {
 
   return (
     <>
-      <Typography variant="h4" align="center" gutterBottom sx={{ mt: 4 }}>
-        Productos Disponibles
-      </Typography>
-      
-      <Container sx={{ py: 8 }} maxWidth="md">
-        {
-          productos ? productos.map(item => (
+      <>
+        {/* Título principal */}
+        <Box sx={{ textAlign: 'center', mt: 6, mb: 2 }}>
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
+            Productos Disponibles
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary">
+            Explora nuestra selección de artículos deportivos de alta calidad
+          </Typography>
+        </Box>
 
-            <CardProduct key={item.id} producto={item}></CardProduct>
+        {/* Contenedor de productos */}
+        <Container maxWidth="lg" sx={{ py: 6 }}>
+          {productos && productos.length > 0 ? (
+            <Grid container spacing={4} justifyContent="center">
+              {productos.map((item) => (
+                <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
+                  <CardProduct producto={item} />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Typography
+              variant="body1"
+              align="center"
+              color="text.secondary"
+              sx={{ py: 4 }}
+            >
+              {productos ? 'No hay productos disponibles en este momento.' : 'Cargando...'}
+            </Typography>
+          )}
+        </Container>
+      </>
 
-          )) : <p>Cargando...</p>
-        }
-
-      </Container>
 
     </>
   )

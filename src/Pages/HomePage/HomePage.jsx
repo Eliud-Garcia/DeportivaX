@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import CardProduct from '../../Components/CardProduct/CardProduct' // Importamos tu componente reutilizable
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../Firebase/ConfigFirebase'
@@ -57,11 +57,11 @@ const HomePage = () => {
       </Box>
 
       <Container className="productos-section">
-        <Typography variant="h4" align="center" fontWeight="bold" gutterBottom className='productos-destacados-txt'> 
+        <Typography variant="h4" align="center" fontWeight="bold" gutterBottom className='productos-destacados-txt'>
           Productos destacados
         </Typography>
 
-        <Container  spacing={4} justifyContent="center" className='productos-destacados-section'>
+        <Container spacing={4} justifyContent="center" className='productos-destacados-section'>
           {
             productos ? productos
               .filter(item => item.destacado && item.stock > 0) // Filtrar productos destacados
@@ -74,39 +74,39 @@ const HomePage = () => {
       </Container>
 
       {/* CTA final */}
-<Box className="cta-section">
-  <Container maxWidth="sm">
-    <Typography variant="h4" fontWeight="bold" gutterBottom>
-      ¡Únete a la comunidad DeportivaX!
-    </Typography>
-    <Typography variant="body1" gutterBottom>
-      Crea tu cuenta o inicia sesión para acceder a ofertas exclusivas, 
-      novedades y recompensas por tus compras.
-    </Typography>
+      <Box className="cta-section">
+        <Container maxWidth="sm">
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
+            ¡Únete a la comunidad DeportivaX!
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Crea tu cuenta o inicia sesión para acceder a ofertas exclusivas,
+            novedades y recompensas por tus compras.
+          </Typography>
 
-    <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        className="cta-button"
-        component={Link}
-        to="/register"
-      >
-        Registrarse
-      </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        size="large"
-        component={Link}
-        to="/login"
-      >
-        Iniciar sesión
-      </Button>
-    </Box>
-  </Container>
-</Box>
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              className="cta-button"
+              component={Link}
+              to="/register"
+            >
+              Registrarse
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              component={Link}
+              to="/login"
+            >
+              Iniciar sesión
+            </Button>
+          </Box>
+        </Container>
+      </Box>
     </main>
   )
 }

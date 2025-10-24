@@ -14,6 +14,9 @@ const CardProduct = ({ producto }) => {
           height="140"
           image={producto.imagenUrl}
           alt={"producto " + producto.nombre}
+          sx={{
+            objectFit: 'contain'
+          }}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

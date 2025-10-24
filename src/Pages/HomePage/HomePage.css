@@ -1,0 +1,65 @@
+/* ----- Hero Section ----- */
+.hero-section {
+  background-image: url('https://images.unsplash.com/photo-1517649763962-0c623066013b');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero-button {
+  margin-top: 20px;
+  background-color: #ff6f00 !important;
+  transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #e65100 !important;
+}
+
+/* ----- Productos destacados ----- */
+.productos-destacados-txt{
+    padding: 2%;
+}
+
+.productos-destacados-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 5%;
+}
+
+/* ----- CTA Section ----- */
+.cta-section {
+  background-color: #f5f5f5;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.cta-button {
+  margin-top: 24px;
+  background-color: #1976d2 !important;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0d47a1 !important;
+}
+
+/* ----- Responsive ajustes ----- */
+@media (max-width: 600px) {
+  .hero-section {
+    padding: 80px 16px;
+  }
+
+  .productos-section {
+    padding: 40px 0;
+  }
+
+  .cta-section {
+    padding: 60px 16px;
+  }
+}

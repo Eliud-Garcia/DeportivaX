@@ -3,6 +3,9 @@ import CardProduct from "../../Components/CardProduct/CardProduct";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../Firebase/ConfigFirebase";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+
 import {
   Box,
   Typography,
@@ -13,10 +16,11 @@ import {
 } from "@mui/material";
 import "./HomePage.css";
 
+
 const HomePage = () => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const obtenerProductosDestacados = async () => {
@@ -139,8 +143,15 @@ const HomePage = () => {
           </Box>
         </Container>
       </Box>
+
+      <button className="contact-btn" onClick = {()=>{
+        navigate('/contact');
+      }}>
+        💬
+      </button>
     </main>
   );
+
 };
 
 export default HomePage;

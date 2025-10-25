@@ -10,6 +10,8 @@ import ProductDetailPage from './Pages/ProductDetailPage/ProductDetailPage.jsx'
 import CheckoutPage from './Pages/CheckoutPage/CheckoutPage.jsx'
 import AddProductPage from './Pages/AddProductPage/AddProductPage.jsx'
 import EditProductPage from './Pages/EditProductPage/EditProductPage.jsx'
+import ContactPage from './Pages/ContactPage/ContactPage.jsx'
+
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -20,6 +22,7 @@ const App = () => {
       <Router>
         <Header />
         <Routes>
+          
           <Route path='/' element={<HomePage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
@@ -30,7 +33,8 @@ const App = () => {
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/admin/add' element={<AddProductPage />} />
           <Route path='/admin/edit/:id' element={<EditProductPage />} />
-          
+          <Route path='/contact' element={<ContactPage/>} />
+
         </Routes>
       </Router>
     </>

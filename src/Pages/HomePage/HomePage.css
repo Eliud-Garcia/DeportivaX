@@ -19,17 +19,17 @@
 }
 
 /* ----- Productos destacados ----- */
-.productos-destacados-txt{
-    padding: 2%;
+.productos-destacados-txt {
+  padding: 2%;
 }
 
-.productos-destacados-section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin: 5%;
+.productos-destacados-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 5%;
 }
 
 /* ----- CTA Section ----- */
@@ -61,5 +61,61 @@
 
   .cta-section {
     padding: 60px 16px;
+  }
+}
+
+/* ----- Contact Button ----- */
+.contact-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  outline: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease-in-out;
+  z-index: 1000;
+}
+
+.contact-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.08);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+}
+
+/* 💡 Animación de entrada */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-btn {
+  animation: floatIn 0.6s ease-out;
+}
+
+/* 📱 Ajuste responsivo */
+@media (max-width: 600px) {
+  .contact-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 15px;
+    right: 15px;
+    font-size: 18px;
   }
 }

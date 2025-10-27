@@ -20,6 +20,7 @@ import { auth, db } from "../../Firebase/ConfigFirebase";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import logo from "../../assets/logo.png";
 import "./Header.css";
 
 const Header = () => {
@@ -89,14 +90,17 @@ const Header = () => {
       <AppBar position="static" className="header">
         <Toolbar className="toolbar">
           {/* LOGO IZQUIERDA */}
-          <Typography
-            variant="h6"
-            className="logo"
+          <img
+            src={logo}
+            alt="Logo DeportivaX"
             onClick={() => navigate("/")}
-          >
-            DeportivaX
-          </Typography>
-
+            style={{
+              height: "70px",
+              cursor: "pointer",
+              objectFit: "cover",
+            }}
+          />
+          
           {/* NAV LINKS Y BOTONES (ocultos en móvil) */}
           {!isMobile && (
             <Box className="nav-links">

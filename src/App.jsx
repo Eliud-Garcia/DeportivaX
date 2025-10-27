@@ -11,6 +11,7 @@ import CheckoutPage from './Pages/CheckoutPage/CheckoutPage.jsx'
 import AddProductPage from './Pages/AddProductPage/AddProductPage.jsx'
 import EditProductPage from './Pages/EditProductPage/EditProductPage.jsx'
 import ContactPage from './Pages/ContactPage/ContactPage.jsx'
+import Footer from './Components/Footer/Footer.jsx'
 
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
@@ -36,6 +37,7 @@ const App = () => {
           <Route path='/contact' element={<ContactPage/>} />
 
         </Routes>
+        <Footer />
       </Router>
     </>
   )

@@ -1,0 +1,21 @@
+.add-product-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.add-product-form{
+    width: 350px;
+}
+
+.add-product-textarea{
+    height: 150px;
+}
+
+.add-product-label{
+    display: flex;
+    flex-direction: column;
+}

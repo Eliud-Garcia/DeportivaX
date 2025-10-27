@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { db } from "../../Firebase/ConfigFirebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import './AddProductPage.css';
 
 const AddProductPage = () => {
   const [producto, setProducto] = useState({
@@ -55,9 +56,10 @@ const AddProductPage = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="add-product-container">
       <h2>Agregar Producto</h2>
       <form
+        className="add-product-form"
         onSubmit={handleSubmit}
         style={{
           display: "flex",
@@ -66,7 +68,7 @@ const AddProductPage = () => {
           maxWidth: "400px",
         }}
       >
-        <label>
+        <label className="add-product-label">
           Nombre:
           <input
             type="text"
@@ -77,7 +79,7 @@ const AddProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="add-product-label">
           Categoría:
           <input
             type="text"
@@ -88,9 +90,10 @@ const AddProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="add-product-label">
           Descripción:
           <textarea
+            className="add-product-textarea"
             name="descripcion"
             value={producto.descripcion}
             onChange={handleChange}
@@ -98,7 +101,7 @@ const AddProductPage = () => {
           ></textarea>
         </label>
 
-        <label>
+        <label className="add-product-label">
           Precio:
           <input
             type="number"
@@ -109,7 +112,7 @@ const AddProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="add-product-label">
           Stock:
           <input
             type="number"
@@ -120,7 +123,7 @@ const AddProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="add-product-label">
           Imagen URL:
           <input
             type="text"

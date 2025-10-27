@@ -16,23 +16,23 @@ import {
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { auth, db} from "../../Firebase/ConfigFirebase";
+import { auth, db } from "../../Firebase/ConfigFirebase";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, getDoc} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import "./Header.css";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
+
   //para saber si es admin
   const [isAdmin, setIsAdmin] = useState(false);
-    
+
   // Escuchar el estado de autenticación
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -132,13 +132,20 @@ const Header = () => {
               )}
 
               {isAdmin ?
-                <Link to="/admin">admin</Link>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() => navigate("/admin")}
+                  className="auth-button"
+                >
+                  admin
+                </Button>
                 : <p></p>
               }
             </Box>
           )}
 
-          
+
 
           {/* ICONO HAMBURGUESA (solo en móvil) */}
           {isMobile && (
@@ -174,6 +181,12 @@ const Header = () => {
                 <ListItemText primary="iniciar sesión" />
               </ListItem>
             )}
+            {isAdmin ?
+              <ListItem button onClick={() => goTo("/admin")}>
+                <ListItemText primary="admin" />
+              </ListItem>
+              : <p></p>
+            }
           </List>
         </Box>
       </Drawer>

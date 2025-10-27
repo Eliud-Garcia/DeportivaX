@@ -1,0 +1,27 @@
+
+
+.edit-container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    /* max-width: 450px; */
+    width: 350px;
+}
+
+.edit-label{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-textarea{
+    height: 150px;
+}

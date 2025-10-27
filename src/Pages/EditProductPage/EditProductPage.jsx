@@ -3,6 +3,8 @@ import { db } from "../../Firebase/ConfigFirebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 
+import './EditProductPage.css';
+
 const EditProductPage = () => {
   const { id } = useParams(); // ID del producto desde la URL
   const navigate = useNavigate();
@@ -87,18 +89,13 @@ const EditProductPage = () => {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="edit-container">
       <h2>Editar Producto</h2>
       <form
         onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          maxWidth: "400px",
-        }}
+        className="edit-form"
       >
-        <label>
+        <label className="edit-label">
           Nombre:
           <input
             type="text"
@@ -109,7 +106,7 @@ const EditProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="edit-label">
           Categoría:
           <input
             type="text"
@@ -120,17 +117,18 @@ const EditProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="edit-label">
           Descripción:
           <textarea
             name="descripcion"
             value={producto.descripcion}
             onChange={handleChange}
             required
+            className="edit-textarea"
           ></textarea>
         </label>
 
-        <label>
+        <label className="edit-label">
           Precio:
           <input
             type="number"
@@ -141,7 +139,7 @@ const EditProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="edit-label">
           Stock:
           <input
             type="number"
@@ -152,7 +150,7 @@ const EditProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="edit-label">
           Imagen URL:
           <input
             type="text"
@@ -172,7 +170,7 @@ const EditProductPage = () => {
           />
         </label>
 
-        <label>
+        <label className="edit-label">
           Fecha de creación:
           <input
             type="date"

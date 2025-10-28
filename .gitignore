@@ -32,5 +32,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# Sensitive Firebase config
-src/Firebase/ConfigFirebase.js
+

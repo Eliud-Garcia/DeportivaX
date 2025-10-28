@@ -7,10 +7,19 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build outputs
 dist
 dist-ssr
 *.local
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
 
 # Editor directories and files
 .vscode/*
@@ -22,4 +31,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Sensitive Firebase config
 src/Firebase/ConfigFirebase.js
